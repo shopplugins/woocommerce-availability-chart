@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *	@version     1.0.0
  *	@author      Jeroen Sormani
  */
-class Woocommerce_Availability_Chart {
+class WooCommerce_Availability_Chart {
 	
 
 	/**
@@ -91,7 +91,7 @@ class Woocommerce_Availability_Chart {
 		$available_variations = $product->get_available_variations();
 
 		?>
-		<h3 class='availability-chart-title'><?php _e( 'Availability', 'woocommerce-availability-chart' ); ?></h3>
+		<h3 class='avilability-chart-title'><?php _e( 'Availability', 'woocommerce-availability-chart' ); ?></h3>
 		<div class='availability-chart'><?php
 		
 			// Loop variations
@@ -202,4 +202,4 @@ require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-quick-edit.php';
 
 
 global $availability_chart;
-$availability_chart = new Woocommerce_Availability_Chart();
+$availability_chart = new WooCommerce_Availability_Chart();
