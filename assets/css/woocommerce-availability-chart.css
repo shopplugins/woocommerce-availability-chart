@@ -1,0 +1,15 @@
+.variation-name {
+	
+}
+.bar {
+	background-color: #ddd;
+	height: 25px;
+	width: 100%;
+}
+.filled {
+	background: #70BAFD;
+	height: 100%;
+	padding-left: 10px;
+	color: #6F6F6F;
+	text-align: center;
+}
