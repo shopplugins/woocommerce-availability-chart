@@ -1,6 +1,6 @@
 === WooCommerce Availability Chart ===
-Contributors: [To be filled in]
-Donate link: [To be filled in]
+Contributors: sormano, growdev
+Donate link: http://www.jeroensormani.com/donate/
 Tags: woocommerce, woocommerce stock, stock, woocommerce availability, woocommerce chart, woocommerce availability chart
 Requires at least: 3.6
 Tested up to: 3.9.1
