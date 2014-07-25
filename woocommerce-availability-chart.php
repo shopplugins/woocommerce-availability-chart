@@ -187,19 +187,22 @@ class WooCommerce_Availability_Chart {
 
 }
 
-/**
- * Admin panel
- */
-require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-admin.php';
-/**
- * Bulk edit Admin panel
- */
-require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-bulk-edit.php';
-/**
- * Quick edit Admin panel
- */
-require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-quick-edit.php';
+if ( is_admin() ) :
 
+	/**
+	 * Admin panel
+	 */
+	require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-admin.php';
+	/**
+	 * Bulk edit Admin panel
+	 */
+	require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-bulk-edit.php';
+	/**
+	 * Quick edit Admin panel
+	 */
+	require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-quick-edit.php';
+	
+endif;
 
 global $availability_chart;
 $availability_chart = new WooCommerce_Availability_Chart();
