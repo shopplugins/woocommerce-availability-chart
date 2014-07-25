@@ -15,7 +15,7 @@ class WAC_Admin_Bulk_Edit {
 	
 
 	/**
-	 * __construct functon.
+	 * __construct function.
 	 *
 	 * @since 1.0.0
 	 *
