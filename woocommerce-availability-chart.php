@@ -91,7 +91,7 @@ class Woocommerce_Availability_Chart {
 		$available_variations = $product->get_available_variations();
 
 		?>
-		<h3 class='avilability-chart-title'><?php _e( 'Availability', 'woocommerce-availability-chart' ); ?></h3>
+		<h3 class='availability-chart-title'><?php _e( 'Availability', 'woocommerce-availability-chart' ); ?></h3>
 		<div class='availability-chart'><?php
 		
 			// Loop variations
