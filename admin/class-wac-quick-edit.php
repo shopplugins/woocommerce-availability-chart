@@ -90,8 +90,3 @@ class WAC_Admin_Quick_Edit {
 
 }
 $wac_admin_quick = new WAC_Admin_Quick_Edit();
-
-
-
-
-?>

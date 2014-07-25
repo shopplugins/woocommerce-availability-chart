@@ -203,4 +203,3 @@ require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-quick-edit.php';
 
 global $availability_chart;
 $availability_chart = new Woocommerce_Availability_Chart();
-?>

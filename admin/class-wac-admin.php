@@ -82,8 +82,3 @@ class WAC_Admin {
 
 }
 $wac_admin = new WAC_Admin();
-
-
-
-
-?>

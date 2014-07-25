@@ -90,8 +90,3 @@ class WAC_Admin_Bulk_Edit {
 
 }
 $wac_admin_bulk = new WAC_Admin_Bulk_Edit();
-
-
-
-
-?>
