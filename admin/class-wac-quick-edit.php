@@ -19,7 +19,6 @@ class WAC_Admin_Quick_Edit {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return void.
 	 */
 	public function __construct() {
 		
@@ -33,7 +32,7 @@ class WAC_Admin_Quick_Edit {
 	
 	
 	/**
-	 * Quikc edit.
+	 * Quick edit.
 	 *
 	 * Add option to quick edit.
 	 *
@@ -76,7 +75,6 @@ class WAC_Admin_Quick_Edit {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return void.
 	 */
 	public function wac_quick_edit_save( $product ) {
 

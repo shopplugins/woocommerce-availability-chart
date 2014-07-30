@@ -1,25 +1,25 @@
 <?PHP
 /*
-Plugin Name: Woocommerce Availability Chart
+Plugin Name: WooCommerce Availability Chart
 Plugin URI: https://github.com/growdev/woocommerce-availability-chart/
 Description: WooCommerce Availability Chart displays a nice looking chart on variation product pages with the availability of products
 Version: 1.0.0
 Author: Grow Development / Jeroen Sormani
-Author URI: http://www.growdevelopment.com
+Author URI: http://growdevelopment.com
 Text Domain: woocommerce-availability-chart
 
  * Copyright Grow Development
  *
- *     This file is part of Woocommerce Availability Chart,
+ *     This file is part of WooCommerce Availability Chart,
  *     a plugin for WordPress.
  *
- *     Woocommerce Availability Chart is free software:
+ *     WooCommerce Availability Chart is free software:
  *     You can redistribute it and/or modify it under the terms of the
  *     GNU General Public License as published by the Free Software
  *     Foundation, either version 3 of the License, or (at your option)
  *     any later version.
  *
- *     Woocommerce Availability Chart is distributed in the hope that
+ *     WooCommerce Availability Chart is distributed in the hope that
  *     it will be useful, but WITHOUT ANY WARRANTY; without even the
  *     implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
  *     PURPOSE. See the GNU General Public License for more details.

@@ -19,7 +19,6 @@ class WAC_Admin_Bulk_Edit {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return void.
 	 */
 	public function __construct() {
 		
@@ -75,7 +74,7 @@ class WAC_Admin_Bulk_Edit {
 	 * Save the bulk edit, only when variable.
 	 *
 	 * @since 1.0.0
-	 *
+	 * @param $product WC_Product
 	 * @return void.
 	 */
 	public function wac_bulk_edit_save( $product ) {
