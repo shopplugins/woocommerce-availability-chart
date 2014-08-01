@@ -1,11 +1,11 @@
 <?PHP
 /*
-Plugin Name: Woocommerce Availability Chart
+Plugin Name: WooCommerce Availability Chart
 Plugin URI: https://github.com/growdev/woocommerce-availability-chart/
 Description: WooCommerce Availability Chart displays a nice looking chart on variation product pages with the availability of products
 Version: 1.0.0
 Author: Grow Development / Jeroen Sormani
-Author URI: http://www.growdevelopment.com
+Author URI: http://growdevelopment.com
 Text Domain: woocommerce-availability-chart
 
  * Copyright Grow Development

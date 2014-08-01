@@ -2,11 +2,11 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
- *	Class Woocommerce_Availability_Chart
+ *	Class WooCommerce_Availability_Chart
  *
  *	Main WAC class initializes the plugin
  *
- *	@class       Woocommerce_Availability_Chart
+ *	@class       WooCommerce_Availability_Chart
  *	@version     1.0.0
  *	@author      Jeroen Sormani
  */
@@ -17,6 +17,10 @@ class WAC_Admin {
 	 * __construct function.
 	 *
 	 * @since 1.0.0
+<<<<<<< HEAD
+=======
+	 *
+>>>>>>> 091acce5b0c1de5a08407ed01cb5a0bff74e04e2
 	 */
 	public function __construct() {
 
@@ -62,6 +66,10 @@ class WAC_Admin {
 	 * Save the availability chart setting.
 	 *
 	 * @since 1.0.0
+<<<<<<< HEAD
+=======
+	 *
+>>>>>>> 091acce5b0c1de5a08407ed01cb5a0bff74e04e2
 	 */
 	public function wac_process_product_meta_variable( $post_id ) {
 

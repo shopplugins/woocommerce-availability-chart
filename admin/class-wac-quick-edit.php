@@ -17,6 +17,10 @@ class WAC_Admin_Quick_Edit {
 	 * __construct function.
 	 *
 	 * @since 1.0.0
+<<<<<<< HEAD
+=======
+	 *
+>>>>>>> 091acce5b0c1de5a08407ed01cb5a0bff74e04e2
 	 */
 	public function __construct() {
 
@@ -71,7 +75,10 @@ class WAC_Admin_Quick_Edit {
 	 *
 	 * @since 1.0.0
 	 *
+<<<<<<< HEAD
 	 * @param object $product Product object.
+=======
+>>>>>>> 091acce5b0c1de5a08407ed01cb5a0bff74e04e2
 	 */
 	public function wac_quick_edit_save( $product ) {
 
