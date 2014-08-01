@@ -81,7 +81,7 @@ class WooCommerce_Availability_Chart {
 	public function wac_availability_chart() {
 
 		global $product;
-		$display_availability_chart = get_post_meta( $product->ID, '_availability_chart', true );
+		$display_availability_chart = get_post_meta( $product->id, '_availability_chart', true );
 
 		if ( 'no' == $display_availability_chart || empty ( $display_availability_chart ) || 'variable' != $product->product_type ) :
 			return;
