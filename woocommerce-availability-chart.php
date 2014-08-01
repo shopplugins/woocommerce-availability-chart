@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *	@author      Jeroen Sormani
  */
 class WooCommerce_Availability_Chart {
-	
+
 
 	/**
 	 * __construct function.
@@ -50,23 +50,26 @@ class WooCommerce_Availability_Chart {
 	 * @return void.
 	 */
 	public function __construct() {
-		
+
+		if ( ! function_exists( 'is_plugin_active_for_network' ) )
+		    require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+
 		// Check if WooCommerce is active
 		if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) :
 			if ( ! is_plugin_active_for_network( 'woocommerce/woocommerce.php' ) ) :
 				return;
 			endif;
 		endif;
-		
+
 		// Add the availability chart
 		add_action( 'woocommerce_single_product_summary', array( $this, 'wac_availability_chart' ), 45 );
-	
+
 		// Enqueue style
 		add_action( 'wp_enqueue_scripts', array( $this, 'wac_enqueue_style' ) );
-		
+
 	}
-	
-	
+
+
 	/**
 	 * Availability chart.
 	 *
@@ -76,11 +79,9 @@ class WooCommerce_Availability_Chart {
 	 *
 	 * @global int $post Gets post object.
 	 * @global int $product Gets product object.
-	 *
-	 * @return void.
 	 */
 	public function wac_availability_chart() {
-	
+
 		global $post, $product;
 		$display_availability_chart = get_post_meta( $post->ID, '_availability_chart', true );
 
@@ -93,31 +94,31 @@ class WooCommerce_Availability_Chart {
 		?>
 		<h3 class='avilability-chart-title'><?php _e( 'Availability', 'woocommerce-availability-chart' ); ?></h3>
 		<div class='availability-chart'><?php
-		
+
 			// Loop variations
 			foreach ( $available_variations as $variation ) :
-				
+
 				$max_stock = $product->get_total_stock();
 				$var = get_product( $variation['variation_id'] );
-				
+
 				if ( true == $var->variation_has_stock ) :
-						
+
 					// Get variation name
 					$variation_name = $this->wac_variation_name( $variation['attributes'] );
-					
+
 					// Get an availability bar
 					$this->wac_get_availability_bar( $variation['variation_id'], $max_stock, $variation_name );
-					
+
 				endif;
-		
+
 			endforeach;
-			
+
 		?></div><?php
 
-		
+
 	}
-	
-	
+
+
 	/**
 	 * Chart bar.
 	 *
@@ -125,28 +126,27 @@ class WooCommerce_Availability_Chart {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int $variation_id ID of the variation
-	 * @param int $max_stock Stock quantity of the variation with the most stock
-	 * @param string $variation_name Name of the variation
-	 * @return void.
+	 * @param int $variation_id ID of the variation.
+	 * @param int $max_stock Stock quantity of the variation with the most stock.
+	 * @param string $variation_name Name of the variation.
 	 */
 	public function wac_get_availability_bar( $variation_id, $max_stock, $variation_name ) {
-		
+
 		$stock = get_post_meta( $variation_id, '_stock', true );
 		$percentage = round( $stock/$max_stock*100 );
 		?><div class='bar-warp'>
-		
+
 			<div class='variation-name'><?php echo $variation_name; ?></div>
-			
+
 			<div class='bar'>
 				<div class='filled' style='width: <?php echo $percentage; ?>%;'><?php echo $stock; ?></div>
 			</div>
-			
+
 		</div><?php
-		
+
 	}
-	
-	
+
+
 	/**
 	 * Variation name.
 	 *
@@ -158,28 +158,26 @@ class WooCommerce_Availability_Chart {
 	 * @return string Variation name based on attributes.
 	 */
 	public function wac_variation_name( $attributes ) {
-		
+
 		$variation_name = '';
 		foreach ( $attributes as $attr => $value ) :
-						
+
 			$term = get_term_by( 'slug', $value, str_replace( 'attribute_', '', $attr ) );
 			if ( isset( $term->name ) ) :
 				$variation_name .= $term->name . ', ';
 			endif;
-			
+
 		endforeach;
-		
+
 		return rtrim( $variation_name, ', ' );
-		
+
 	}
-	
-	
+
+
 	/**
 	 * Enqueue style.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void.
 	 */
 	public function wac_enqueue_style() {
 		wp_enqueue_style( 'woocommerce-availability-chart', plugins_url( 'assets/css/woocommerce-availability-chart.css', __FILE__ ) );
@@ -201,7 +199,7 @@ if ( is_admin() ) :
 	 * Quick edit Admin panel
 	 */
 	require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-quick-edit.php';
-	
+
 endif;
 
 global $availability_chart;

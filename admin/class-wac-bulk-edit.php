@@ -1,5 +1,4 @@
 <?php
-
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
@@ -12,37 +11,33 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *	@author      Jeroen Sormani
  */
 class WAC_Admin_Bulk_Edit {
-	
+
 
 	/**
 	 * __construct function.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void.
 	 */
 	public function __construct() {
-		
+
 		// Add select to bulk edit
 		add_action( 'woocommerce_product_bulk_edit_end', array( $this, 'wac_bulk_edit_availability_chart' ) );
-	
+
 		// Save bulk edit availability chart setting
 		add_action( 'woocommerce_product_bulk_edit_save', array( $this, 'wac_bulk_edit_save' ) );
-	
+
 	}
-	
-	
+
+
 	/**
 	 * Bulk edit.
 	 *
 	 * Add option to bulk edit.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void.
 	 */
 	public function wac_bulk_edit_availability_chart() {
-		
+
 		?>
 		<div class="availability-chart-field">
 			<label>
@@ -55,7 +50,7 @@ class WAC_Admin_Bulk_Edit {
 							'yes'	=> __( 'Display chart', 'woocommerce-availability-chart' ),
 							'no'	=> __( 'Don\'t display Chart', 'woocommerce-availability-chart' )
 						);
-						foreach ($options as $key => $value) {
+						foreach ( $options as $key => $value ) {
 							echo '<option value="' . esc_attr( $key ) . '">'. $value .'</option>';
 						}
 					?>
@@ -64,11 +59,11 @@ class WAC_Admin_Bulk_Edit {
 			</label>
 		</div>
 		<?php
-		
+
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Save bulk edit.
 	 *
@@ -76,7 +71,7 @@ class WAC_Admin_Bulk_Edit {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return void.
+	 * @param object $product Product object.
 	 */
 	public function wac_bulk_edit_save( $product ) {
 
@@ -85,7 +80,7 @@ class WAC_Admin_Bulk_Edit {
 				update_post_meta( $product->id, '_availability_chart', wc_clean( $_REQUEST['_availability_chart'] ) );
 			endif;
 		endif;
-		
+
 	}
 
 }
