@@ -46,8 +46,6 @@ class WooCommerce_Availability_Chart {
 	 * __construct function.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void.
 	 */
 	public function __construct() {
 
@@ -82,8 +80,8 @@ class WooCommerce_Availability_Chart {
 	 */
 	public function wac_availability_chart() {
 
-		global $post, $product;
-		$display_availability_chart = get_post_meta( $post->ID, '_availability_chart', true );
+		global $product;
+		$display_availability_chart = get_post_meta( $product->ID, '_availability_chart', true );
 
 		if ( 'no' == $display_availability_chart || empty ( $display_availability_chart ) || 'variable' != $product->product_type ) :
 			return;
@@ -134,7 +132,7 @@ class WooCommerce_Availability_Chart {
 
 		$stock = get_post_meta( $variation_id, '_stock', true );
 		$percentage = round( $stock/$max_stock*100 );
-		?><div class='bar-warp'>
+		?><div class='bar-wrap'>
 
 			<div class='variation-name'><?php echo $variation_name; ?></div>
 

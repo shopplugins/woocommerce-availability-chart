@@ -2,14 +2,14 @@
 	
 }
 .bar {
-	background-color: #ddd;
+	background-color: #ddd; /* Empty part of bar */
 	height: 25px;
 	width: 100%;
 }
 .filled {
-	background: #70BAFD;
+	background-color: #70BAFD; /* The filled bar color */
 	height: 100%;
 	padding-left: 10px;
-	color: #6F6F6F;
+	color: #6F6F6F; /* Stock quantity text color */
 	text-align: center;
 }
