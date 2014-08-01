@@ -17,10 +17,6 @@ class WAC_Admin {
 	 * __construct function.
 	 *
 	 * @since 1.0.0
-<<<<<<< HEAD
-=======
-	 *
->>>>>>> 091acce5b0c1de5a08407ed01cb5a0bff74e04e2
 	 */
 	public function __construct() {
 
@@ -66,10 +62,6 @@ class WAC_Admin {
 	 * Save the availability chart setting.
 	 *
 	 * @since 1.0.0
-<<<<<<< HEAD
-=======
-	 *
->>>>>>> 091acce5b0c1de5a08407ed01cb5a0bff74e04e2
 	 */
 	public function wac_process_product_meta_variable( $post_id ) {
 
