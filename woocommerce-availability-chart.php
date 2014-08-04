@@ -158,11 +158,20 @@ class WooCommerce_Availability_Chart {
 	public function wac_variation_name( $attributes ) {
 
 		$variation_name = '';
+
 		foreach ( $attributes as $attr => $value ) :
 
-			$term = get_term_by( 'slug', $value, str_replace( 'attribute_', '', $attr ) );
-			if ( isset( $term->name ) ) :
-				$variation_name .= $term->name . ', ';
+			if ( term_exists( $value ) ) :
+
+				$term = get_term_by( 'slug', $value, str_replace( 'attribute_', '', $attr ) );
+				if ( isset( $term->name ) ) :
+					$variation_name .= $term->name . ', ';
+				endif;
+				
+			else :
+
+				$variation_name .= $value;
+
 			endif;
 
 		endforeach;
