@@ -17,7 +17,7 @@ WooCommerce Availability Charts adds an nice chart below your add-to-cart button
 
 == Installation ==
 
-1. Upload the folder `woocommerce-availability-chart to the `/wp-content/plugins/` directory
+1. Upload the folder `woocommerce-availability-chart` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Enable the 'Availability chart' in the product data panel at product variations
 

@@ -137,7 +137,7 @@ class WooCommerce_Availability_Chart {
 			<div class='variation-name'><?php echo $variation_name; ?></div>
 
 			<div class='bar'>
-				<div class='filled' style='width: <?php echo $percentage; ?>%;'><?php echo $stock; ?></div>
+				<div class='filled<?php if ($stock==0) echo ' out-of-stock';  ?>' style='width: <?php echo $percentage; ?>%;'><?php echo $stock; ?></div>
 			</div>
 
 		</div><?php

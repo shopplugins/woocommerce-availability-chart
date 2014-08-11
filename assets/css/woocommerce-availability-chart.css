@@ -13,3 +13,8 @@
 	color: #6F6F6F; /* Stock quantity text color */
 	text-align: center;
 }
+
+.out-of-stock {
+    margin-left: 10px;
+    padding-left: 0px;
+}
