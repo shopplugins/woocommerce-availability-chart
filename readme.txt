@@ -21,6 +21,17 @@ WooCommerce Availability Charts adds an nice chart below your add-to-cart button
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Enable the 'Availability chart' in the product data panel at product variations
 
+== Frequently Asked Questions ==
+
+= Can I change the colors of the bar via the admin? =
+
+Currently the only way to change the bar colors is by overriding the CSS.
+
+
+== Upgrade Notice ==
+
+None.
+
 == Screenshots ==
 
 1. Availability chart
