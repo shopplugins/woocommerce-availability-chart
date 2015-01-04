@@ -161,7 +161,7 @@ class WooCommerce_Availability_Chart {
 
 		foreach ( $attributes as $attr => $value ) :
 
-			if ( term_exists( $value ) ) :
+			if ( term_exists( $value, str_replace( 'attribute_', '', $attr ) ) ) :
 
 				$term = get_term_by( 'slug', $value, str_replace( 'attribute_', '', $attr ) );
 				if ( isset( $term->name ) ) :
