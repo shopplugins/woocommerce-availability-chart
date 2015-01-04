@@ -97,7 +97,7 @@ class WooCommerce_Availability_Chart {
 			foreach ( $available_variations as $variation ) :
 
 				$max_stock = $product->get_total_stock();
-				$var = get_product( $variation['variation_id'] );
+				$var = wc_get_product( $variation['variation_id'] );
 
 				if ( true == $var->variation_has_stock ) :
 
@@ -166,8 +166,9 @@ class WooCommerce_Availability_Chart {
 				$term = get_term_by( 'slug', $value, str_replace( 'attribute_', '', $attr ) );
 				if ( isset( $term->name ) ) :
 					$variation_name .= $term->name . ', ';
+
 				endif;
-				
+
 			else :
 
 				$variation_name .= $value;
