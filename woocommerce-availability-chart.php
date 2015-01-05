@@ -43,6 +43,34 @@ class WooCommerce_Availability_Chart {
 
 
 	/**
+	 * Plugin version.
+	 *
+	 * @since 1.0.0
+	 * @var string $version Plugin version number.
+	 */
+	public $version = '1.0.0';
+
+
+	/**
+	 * Plugin file.
+	 *
+	 * @since 1.0.0
+	 * @var string $file Plugin file path.
+	 */
+	public $file = __FILE__;
+
+
+	/**
+	 * Instace of WooCommerce_Availability_Chart.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var object $instance The instance of WooCommerce_Availability_Chart.
+	 */
+	private static $instance;
+
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 1.0.0
@@ -58,6 +86,55 @@ class WooCommerce_Availability_Chart {
 			if ( ! is_plugin_active_for_network( 'woocommerce/woocommerce.php' ) ) :
 				return;
 			endif;
+		endif;
+
+	}
+
+
+	/**
+	 * Instance.
+	 *
+	 * An global instance of the class. Used to retrieve the instance
+	 * to use on other files/plugins/themes.
+	 *
+	 * @since 1.0.0
+	 * @return object Instance of the class.
+	 */
+	public static function instance() {
+
+		if ( is_null( self::$instance ) ) :
+			self::$instance = new self();
+		endif;
+
+		return self::$instance;
+
+	}
+
+
+	/**
+	 * init.
+	 *
+	 * Initialize plugin parts.
+	 *
+	 * @since 1.0.0
+	 */
+	public function init() {
+
+		if ( is_admin() ) :
+
+			/**
+			 * Admin panel
+			 */
+			require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-admin.php';
+			/**
+			 * Bulk edit Admin panel
+			 */
+			require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-bulk-edit.php';
+			/**
+			 * Quick edit Admin panel
+			 */
+			require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-quick-edit.php';
+
 		endif;
 
 		// Add the availability chart
@@ -193,22 +270,24 @@ class WooCommerce_Availability_Chart {
 
 }
 
-if ( is_admin() ) :
 
-	/**
-	 * Admin panel
-	 */
-	require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-admin.php';
-	/**
-	 * Bulk edit Admin panel
-	 */
-	require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-bulk-edit.php';
-	/**
-	 * Quick edit Admin panel
-	 */
-	require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-quick-edit.php';
+/**
+ * The main function responsible for returning the WooCommerce_Availability_Chart object.
+ *
+ * Use this function like you would a global variable, except without needing to declare the global.
+ *
+ * Example: <?php WooCommerce_Availability_Chart()->method_name(); ?>
+ *
+ * @since 1.0.0
+ *
+ * @return object WooCommerce_Availability_Chart class object.
+ */
+if ( ! function_exists( 'WooCommerce_Availability_Chart' ) ) :
+
+ 	function WooCommerce_Availability_Chart() {
+		return WooCommerce_Availability_Chart::instance();
+	}
 
 endif;
 
-global $availability_chart;
-$availability_chart = new WooCommerce_Availability_Chart();
+WooCommerce_Availability_Chart();

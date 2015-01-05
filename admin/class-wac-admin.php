@@ -14,7 +14,7 @@ class WAC_Admin {
 
 
 	/**
-	 * __construct function.
+	 * Constructor.
 	 *
 	 * @since 1.0.0
 	 */
