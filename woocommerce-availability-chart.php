@@ -31,9 +31,9 @@ Text Domain: woocommerce-availability-chart
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
- * Class WooCommerce_Availability_Chart
+ * Class WooCommerce_Availability_Chart.
  *
- * Main WAC class initializes the plugin
+ * Main WAC class initializes the plugin.
  *
  * @class		WooCommerce_Availability_Chart
  * @version		1.0.0
@@ -96,8 +96,8 @@ class WooCommerce_Availability_Chart {
 			// Loop variations
 			foreach ( $available_variations as $variation ) :
 
-				$max_stock = $product->get_total_stock();
-				$var = wc_get_product( $variation['variation_id'] );
+				$max_stock 	= $product->get_total_stock();
+				$var 		= wc_get_product( $variation['variation_id'] );
 
 				if ( true == $var->variation_has_stock ) :
 
@@ -130,7 +130,7 @@ class WooCommerce_Availability_Chart {
 	 */
 	public function wac_get_availability_bar( $variation_id, $max_stock, $variation_name ) {
 
-		$stock = get_post_meta( $variation_id, '_stock', true );
+		$stock 		= get_post_meta( $variation_id, '_stock', true );
 		$percentage = round( $stock/$max_stock*100 );
 		?><div class='bar-wrap'>
 
