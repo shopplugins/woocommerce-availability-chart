@@ -1,56 +1,57 @@
 <?PHP
 /*
 Plugin Name: WooCommerce Availability Chart
-Plugin URI: https://github.com/growdev/woocommerce-availability-chart/
+Plugin URI: https://github.com/growdevelopment/woocommerce-availability-chart/
 Description: WooCommerce Availability Chart displays a nice looking chart on variation product pages with the availability of products
 Version: 1.0.0
-Author: Grow Development / Jeroen Sormani
-Author URI: http://growdevelopment.com
+Author: Shop Plugins, Jeroen Sormani, Daniel Espinoza
+Author URI: http://shopplugins.com
 Text Domain: woocommerce-availability-chart
 
- * Copyright Grow Development
+ * Copyright Shop Plugins
  *
- *     This file is part of WooCommerce Availability Chart,
- *     a plugin for WordPress.
+ *		This file is part of WooCommerce Availability Chart,
+ *		a plugin for WordPress.
  *
- *     WooCommerce Availability Chart is free software:
- *     You can redistribute it and/or modify it under the terms of the
- *     GNU General Public License as published by the Free Software
- *     Foundation, either version 3 of the License, or (at your option)
- *     any later version.
+ *		WooCommerce Availability Chart is free software:
+ *		You can redistribute it and/or modify it under the terms of the
+ *		GNU General Public License as published by the Free Software
+ *		Foundation, either version 3 of the License, or (at your option)
+ *		any later version.
  *
- *     WooCommerce Availability Chart is distributed in the hope that
- *     it will be useful, but WITHOUT ANY WARRANTY; without even the
- *     implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- *     PURPOSE. See the GNU General Public License for more details.
+ *		WooCommerce Availability Chart is distributed in the hope that
+ *		it will be useful, but WITHOUT ANY WARRANTY; without even the
+ *		implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ *		PURPOSE. See the GNU General Public License for more details.
  *
- *     You should have received a copy of the GNU General Public License
- *     along with WordPress. If not, see <http://www.gnu.org/licenses/>.
+ *		You should have received a copy of the GNU General Public License
+ *		along with WordPress. If not, see <http://www.gnu.org/licenses/>.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
- *	Class WooCommerce_Availability_Chart
+ * Class WooCommerce_Availability_Chart.
  *
- *	Main WAC class initializes the plugin
+ * Main WAC class initializes the plugin.
  *
- *	@class       WooCommerce_Availability_Chart
- *	@version     1.0.0
- *	@author      Jeroen Sormani
+ * @class		WooCommerce_Availability_Chart
+ * @version		1.0.0
+ * @author		Jeroen Sormani
  */
 class WooCommerce_Availability_Chart {
 
 
 	/**
-	 * __construct function.
+	 * Constructor.
 	 *
 	 * @since 1.0.0
 	 */
 	public function __construct() {
 
-		if ( ! function_exists( 'is_plugin_active_for_network' ) )
-		    require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) :
+			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		endif;
 
 		// Check if WooCommerce is active
 		if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) :
@@ -75,8 +76,7 @@ class WooCommerce_Availability_Chart {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @global int $post Gets post object.
-	 * @global int $product Gets product object.
+	 * @global int $product Get product object.
 	 */
 	public function wac_availability_chart() {
 
@@ -90,14 +90,14 @@ class WooCommerce_Availability_Chart {
 		$available_variations = $product->get_available_variations();
 
 		?>
-		<h3 class='avilability-chart-title'><?php _e( 'Availability', 'woocommerce-availability-chart' ); ?></h3>
+		<h3 class='availability-chart-title'><?php _e( 'Availability', 'woocommerce-availability-chart' ); ?></h3>
 		<div class='availability-chart'><?php
 
 			// Loop variations
 			foreach ( $available_variations as $variation ) :
 
-				$max_stock = $product->get_total_stock();
-				$var = get_product( $variation['variation_id'] );
+				$max_stock 	= $product->get_total_stock();
+				$var 		= wc_get_product( $variation['variation_id'] );
 
 				if ( true == $var->variation_has_stock ) :
 
@@ -124,20 +124,20 @@ class WooCommerce_Availability_Chart {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int $variation_id ID of the variation.
-	 * @param int $max_stock Stock quantity of the variation with the most stock.
-	 * @param string $variation_name Name of the variation.
+	 * @param int		$variation_id 		ID of the variation.
+	 * @param int 		$max_stock 			Stock quantity of the variation with the most stock.
+	 * @param string 	$variation_name 	Name of the variation.
 	 */
 	public function wac_get_availability_bar( $variation_id, $max_stock, $variation_name ) {
 
-		$stock = get_post_meta( $variation_id, '_stock', true );
+		$stock 		= get_post_meta( $variation_id, '_stock', true );
 		$percentage = round( $stock/$max_stock*100 );
 		?><div class='bar-wrap'>
 
 			<div class='variation-name'><?php echo $variation_name; ?></div>
 
 			<div class='bar'>
-				<div class='filled<?php if ($stock==0) echo ' out-of-stock';  ?>' style='width: <?php echo $percentage; ?>%;'><?php echo $stock; ?></div>
+				<div class='filled<?php if ($stock==0) echo ' out-of-stock'; ?>' style='width: <?php echo $percentage; ?>%;'><?php echo $stock; ?></div>
 			</div>
 
 		</div><?php
@@ -152,8 +152,8 @@ class WooCommerce_Availability_Chart {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $attributes All the attributes of the variation
-	 * @return string Variation name based on attributes.
+	 * @param 	array 	$attributes 	All the attributes of the variation
+	 * @return 	string 					Variation name based on attributes.
 	 */
 	public function wac_variation_name( $attributes ) {
 
@@ -161,16 +161,17 @@ class WooCommerce_Availability_Chart {
 
 		foreach ( $attributes as $attr => $value ) :
 
-			if ( term_exists( $value ) ) :
+			if ( term_exists( $value, str_replace( 'attribute_', '', $attr ) ) ) :
 
 				$term = get_term_by( 'slug', $value, str_replace( 'attribute_', '', $attr ) );
 				if ( isset( $term->name ) ) :
 					$variation_name .= $term->name . ', ';
+
 				endif;
-				
+
 			else :
 
-				$variation_name .= $value;
+				$variation_name .= $value . ', ';
 
 			endif;
 
