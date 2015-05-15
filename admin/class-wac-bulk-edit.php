@@ -14,17 +14,17 @@ class WAC_Admin_Bulk_Edit {
 
 
 	/**
-	 * __construct function.
+	 * Constructor.
 	 *
 	 * @since 1.0.0
 	 */
 	public function __construct() {
 
 		// Add select to bulk edit
-		add_action( 'woocommerce_product_bulk_edit_end', array( $this, 'wac_bulk_edit_availability_chart' ) );
+		add_action( 'woocommerce_product_bulk_edit_end', array( $this, 'bulk_edit_availability_chart' ) );
 
 		// Save bulk edit availability chart setting
-		add_action( 'woocommerce_product_bulk_edit_save', array( $this, 'wac_bulk_edit_save' ) );
+		add_action( 'woocommerce_product_bulk_edit_save', array( $this, 'bulk_edit_save' ) );
 
 	}
 
@@ -36,15 +36,14 @@ class WAC_Admin_Bulk_Edit {
 	 *
 	 * @since 1.0.0
 	 */
-	public function wac_bulk_edit_availability_chart() {
+	public function bulk_edit_availability_chart() {
 
-		?>
-		<div class="availability-chart-field">
+		?><div class="availability-chart-field">
 			<label>
 			    <span class="title"><?php _e( 'Availability chart', 'woocommerce-availability-chart' ); ?></span>
 			    <span class="input-text-wrap">
-			    	<select class="availability-chart" name="_availability_chart">
-					<?php
+			    	<select class="availability-chart" name="_availability_chart"><?php
+
 						$options = array(
 							''		=> __( '— No Change —', 'woocommerce' ),
 							'yes'	=> __( 'Display chart', 'woocommerce-availability-chart' ),
@@ -53,15 +52,13 @@ class WAC_Admin_Bulk_Edit {
 						foreach ( $options as $key => $value ) {
 							echo '<option value="' . esc_attr( $key ) . '">'. $value .'</option>';
 						}
-					?>
-					</select>
+
+					?></select>
 				</span>
 			</label>
-		</div>
-		<?php
+		</div><?php
 
 	}
-
 
 
 	/**
@@ -72,9 +69,8 @@ class WAC_Admin_Bulk_Edit {
 	 * @since 1.0.0
 	 *
 	 * @param $product WC_Product
-	 * @return void.
 	 */
-	public function wac_bulk_edit_save( $product ) {
+	public function bulk_edit_save( $product ) {
 
 		if ( $product->is_type( 'variable' ) ) :
 			if ( ! empty( $_REQUEST['_availability_chart'] ) ) :
@@ -84,5 +80,5 @@ class WAC_Admin_Bulk_Edit {
 
 	}
 
+
 }
-$wac_admin_bulk = new WAC_Admin_Bulk_Edit();
