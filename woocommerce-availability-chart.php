@@ -3,7 +3,7 @@
 Plugin Name: WooCommerce Availability Chart
 Plugin URI: https://github.com/shopplugins/woocommerce-availability-chart/
 Description: WooCommerce Availability Chart displays a nice looking chart on variation product pages with the availability of products
-Version: 1.0.0
+Version: 1.0.1
 Author: Shop Plugins, Jeroen Sormani, Daniel Espinoza
 Author URI: http://shopplugins.com
 Text Domain: woocommerce-availability-chart
@@ -48,7 +48,7 @@ class WooCommerce_Availability_Chart {
 	 * @since 1.0.0
 	 * @var string $version Plugin version number.
 	 */
-	public $version = '1.0.0';
+	public $version = '1.0.1';
 
 
 	/**
