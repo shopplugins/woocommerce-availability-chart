@@ -1,4 +1,7 @@
 *** WooCommerce Availability Chart ***
 
+2015-06-08 Version 1.0.1
+* Added chart to Simple Products
+
 2015-02-26 Version 1.0.0
 * Initial release
