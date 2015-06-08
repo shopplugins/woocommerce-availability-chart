@@ -1,0 +1,4 @@
+*** WooCommerce Availability Chart ***
+
+2015-02-26 Version 1.0.0
+* Initial release

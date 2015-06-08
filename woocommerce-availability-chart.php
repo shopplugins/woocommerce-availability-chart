@@ -1,14 +1,14 @@
 <?PHP
 /*
 Plugin Name: WooCommerce Availability Chart
-Plugin URI: https://github.com/growdev/woocommerce-availability-chart/
+Plugin URI: https://github.com/shopplugins/woocommerce-availability-chart/
 Description: WooCommerce Availability Chart displays a nice looking chart on variation product pages with the availability of products
 Version: 1.0.0
-Author: Grow Development / Jeroen Sormani
-Author URI: http://growdevelopment.com
+Author: Shop Plugins, Jeroen Sormani, Daniel Espinoza
+Author URI: http://shopplugins.com
 Text Domain: woocommerce-availability-chart
 
- * Copyright Grow Development
+ * Copyright Shop Plugins
  *
  *		This file is part of WooCommerce Availability Chart,
  *		a plugin for WordPress.
@@ -171,7 +171,8 @@ class WooCommerce_Availability_Chart {
 			return;
 		endif;
 
-		?><h3 class='avilability-chart-title'><?php _e( 'Availability', 'woocommerce-availability-chart' ); ?></h3>
+		?>
+		<h3 class='availability-chart-title'><?php _e( 'Availability', 'woocommerce-availability-chart' ); ?></h3>
 		<div class='availability-chart'><?php
 
 			if ( 'variable' == $product->product_type ) :
@@ -266,7 +267,7 @@ class WooCommerce_Availability_Chart {
 
 			else :
 
-				$variation_name .= $value;
+				$variation_name .= $value . ', ';
 
 			endif;
 
