@@ -222,13 +222,17 @@ class WooCommerce_Availability_Chart {
 	public function get_availability_bar( $product_id, $max_stock, $variation_name ) {
 
 		$stock 		= get_post_meta( $product_id, '_stock', true );
-		$percentage = round( $stock/$max_stock*100 );
+		if ($max_stock>0) {
+			$percentage = round( $stock / $max_stock * 100 );
+		} else {
+			$percentage = 0;
+		}
 		?><div class='bar-wrap'>
 
 			<div class='variation-name'><?php echo $variation_name; ?></div>
 
 			<div class='bar'>
-				<div class='filled<?php if ( 0 == $stock ) { echo ' out-of-stock'; } ?>' style='width: <?php echo $percentage; ?>%;'><?php echo $stock; ?></div>
+				<div class='filled<?php if ( 0 == $stock ) { echo ' out-of-stock'; } ?>' style='width: <?php echo $percentage; ?>%;'><?php echo (int) $stock; ?></div>
 			</div>
 
 		</div><?php
