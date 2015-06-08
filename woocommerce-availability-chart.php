@@ -43,6 +43,34 @@ class WooCommerce_Availability_Chart {
 
 
 	/**
+	 * Plugin version.
+	 *
+	 * @since 1.0.0
+	 * @var string $version Plugin version number.
+	 */
+	public $version = '1.0.0';
+
+
+	/**
+	 * Plugin file.
+	 *
+	 * @since 1.0.0
+	 * @var string $file Plugin file path.
+	 */
+	public $file = __FILE__;
+
+
+	/**
+	 * Instace of WooCommerce_Availability_Chart.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var object $instance The instance of WooCommerce_Availability_Chart.
+	 */
+	private static $instance;
+
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 1.0.0
@@ -60,11 +88,67 @@ class WooCommerce_Availability_Chart {
 			endif;
 		endif;
 
+		$this->init();
+
+	}
+
+
+	/**
+	 * Instance.
+	 *
+	 * An global instance of the class. Used to retrieve the instance
+	 * to use on other files/plugins/themes.
+	 *
+	 * @since 1.0.0
+	 * @return object Instance of the class.
+	 */
+	public static function instance() {
+
+		if ( is_null( self::$instance ) ) :
+			self::$instance = new self();
+		endif;
+
+		return self::$instance;
+
+	}
+
+
+	/**
+	 * Init.
+	 *
+	 * Initialize plugin parts.
+	 *
+	 * @since 1.0.0
+	 */
+	public function init() {
+
+		if ( is_admin() ) :
+
+			/**
+			 * Admin panel
+			 */
+			require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-admin.php';
+			$this->admin = new WAC_Admin();
+
+			/**
+			 * Bulk edit Admin panel
+			 */
+			require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-bulk-edit.php';
+			$this->bulk_edit = new WAC_Admin_Bulk_Edit();
+
+			/**
+			 * Quick edit Admin panel
+			 */
+			require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-quick-edit.php';
+			$this->quick_edit = new WAC_Admin_Quick_Edit();
+
+		endif;
+
 		// Add the availability chart
-		add_action( 'woocommerce_single_product_summary', array( $this, 'wac_availability_chart' ), 45 );
+		add_action( 'woocommerce_single_product_summary', array( $this, 'availability_chart' ), 45 );
 
 		// Enqueue style
-		add_action( 'wp_enqueue_scripts', array( $this, 'wac_enqueue_style' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_style' ) );
 
 	}
 
@@ -78,41 +162,49 @@ class WooCommerce_Availability_Chart {
 	 *
 	 * @global int $product Get product object.
 	 */
-	public function wac_availability_chart() {
+	public function availability_chart() {
 
 		global $product;
 		$display_availability_chart = get_post_meta( $product->id, '_availability_chart', true );
 
-		if ( 'no' == $display_availability_chart || empty ( $display_availability_chart ) || 'variable' != $product->product_type ) :
+		if ( 'no' == $display_availability_chart || empty ( $display_availability_chart ) ) :
 			return;
 		endif;
-
-		$available_variations = $product->get_available_variations();
 
 		?>
 		<h3 class='availability-chart-title'><?php _e( 'Availability', 'woocommerce-availability-chart' ); ?></h3>
 		<div class='availability-chart'><?php
 
-			// Loop variations
-			foreach ( $available_variations as $variation ) :
+			if ( 'variable' == $product->product_type ) :
 
-				$max_stock 	= $product->get_total_stock();
-				$var 		= wc_get_product( $variation['variation_id'] );
+				// Loop variations
+				$available_variations = $product->get_available_variations();
+				foreach ( $available_variations as $variation ) :
 
-				if ( true == $var->variation_has_stock ) :
+					$max_stock 	= $product->get_total_stock();
+					$var 		= wc_get_product( $variation['variation_id'] );
 
-					// Get variation name
-					$variation_name = $this->wac_variation_name( $variation['attributes'] );
+					if ( true == $var->variation_has_stock ) :
 
-					// Get an availability bar
-					$this->wac_get_availability_bar( $variation['variation_id'], $max_stock, $variation_name );
+						// Get variation name
+						$variation_name = $this->variation_name( $variation['attributes'] );
 
-				endif;
+						// Get an availability bar
+						$this->get_availability_bar( $variation['variation_id'], $max_stock, $variation_name );
 
-			endforeach;
+					endif;
+
+				endforeach;
+
+			endif;
+
+			if ( 'simple' == $product->product_type ) :
+
+				$this->get_availability_bar( $product->id, $product->get_total_stock(), $product->get_formatted_name() );
+
+			endif;
 
 		?></div><?php
-
 
 	}
 
@@ -124,20 +216,24 @@ class WooCommerce_Availability_Chart {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int		$variation_id 		ID of the variation.
+	 * @param int		$product_id 		ID of the product.
 	 * @param int 		$max_stock 			Stock quantity of the variation with the most stock.
 	 * @param string 	$variation_name 	Name of the variation.
 	 */
-	public function wac_get_availability_bar( $variation_id, $max_stock, $variation_name ) {
+	public function get_availability_bar( $product_id, $max_stock, $variation_name ) {
 
-		$stock 		= get_post_meta( $variation_id, '_stock', true );
-		$percentage = round( $stock/$max_stock*100 );
+		$stock 		= get_post_meta( $product_id, '_stock', true );
+		if ($max_stock>0) {
+			$percentage = round( $stock / $max_stock * 100 );
+		} else {
+			$percentage = 0;
+		}
 		?><div class='bar-wrap'>
 
 			<div class='variation-name'><?php echo $variation_name; ?></div>
 
 			<div class='bar'>
-				<div class='filled<?php if ($stock==0) echo ' out-of-stock'; ?>' style='width: <?php echo $percentage; ?>%;'><?php echo $stock; ?></div>
+				<div class='filled<?php if ( 0 == $stock ) { echo ' out-of-stock'; } ?>' style='width: <?php echo $percentage; ?>%;'><?php echo (int) $stock; ?></div>
 			</div>
 
 		</div><?php
@@ -155,7 +251,7 @@ class WooCommerce_Availability_Chart {
 	 * @param 	array 	$attributes 	All the attributes of the variation
 	 * @return 	string 					Variation name based on attributes.
 	 */
-	public function wac_variation_name( $attributes ) {
+	public function variation_name( $attributes ) {
 
 		$variation_name = '';
 
@@ -187,28 +283,30 @@ class WooCommerce_Availability_Chart {
 	 *
 	 * @since 1.0.0
 	 */
-	public function wac_enqueue_style() {
+	public function enqueue_style() {
 		wp_enqueue_style( 'woocommerce-availability-chart', plugins_url( 'assets/css/woocommerce-availability-chart.css', __FILE__ ) );
 	}
 
 }
 
-if ( is_admin() ) :
 
-	/**
-	 * Admin panel
-	 */
-	require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-admin.php';
-	/**
-	 * Bulk edit Admin panel
-	 */
-	require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-bulk-edit.php';
-	/**
-	 * Quick edit Admin panel
-	 */
-	require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-quick-edit.php';
+/**
+ * The main function responsible for returning the WooCommerce_Availability_Chart object.
+ *
+ * Use this function like you would a global variable, except without needing to declare the global.
+ *
+ * Example: <?php WooCommerce_Availability_Chart()->method_name(); ?>
+ *
+ * @since 1.0.0
+ *
+ * @return object WooCommerce_Availability_Chart class object.
+ */
+if ( ! function_exists( 'WooCommerce_Availability_Chart' ) ) :
+
+ 	function WooCommerce_Availability_Chart() {
+		return WooCommerce_Availability_Chart::instance();
+	}
 
 endif;
 
-global $availability_chart;
-$availability_chart = new WooCommerce_Availability_Chart();
+WooCommerce_Availability_Chart();
