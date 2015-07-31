@@ -61,7 +61,7 @@ class WooCommerce_Availability_Chart {
 
 
 	/**
-	 * Instace of WooCommerce_Availability_Chart.
+	 * Instance of WooCommerce_Availability_Chart.
 	 *
 	 * @since 1.0.0
 	 * @access private
@@ -160,7 +160,7 @@ class WooCommerce_Availability_Chart {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @global int $product Get product object.
+	 * @global WC_Product_Variable $product Get product object.
 	 */
 	public function availability_chart() {
 
