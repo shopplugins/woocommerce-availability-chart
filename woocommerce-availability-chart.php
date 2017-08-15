@@ -1,14 +1,14 @@
 <?PHP
 /*
 Plugin Name: WooCommerce Availability Chart
-Plugin URI: https://github.com/growdev/woocommerce-availability-chart/
+Plugin URI: https://github.com/shopplugins/woocommerce-availability-chart/
 Description: WooCommerce Availability Chart displays a nice looking chart on variation product pages with the availability of products
-Version: 1.0.0
-Author: Grow Development / Jeroen Sormani
-Author URI: http://growdevelopment.com
+Version: 1.0.1
+Author: Shop Plugins, Jeroen Sormani, Daniel Espinoza
+Author URI: http://shopplugins.com
 Text Domain: woocommerce-availability-chart
 
- * Copyright Grow Development
+ * Copyright Shop Plugins
  *
  *		This file is part of WooCommerce Availability Chart,
  *		a plugin for WordPress.
@@ -48,7 +48,7 @@ class WooCommerce_Availability_Chart {
 	 * @since 1.0.0
 	 * @var string $version Plugin version number.
 	 */
-	public $version = '1.0.0';
+	public $version = '1.0.1';
 
 
 	/**
@@ -171,7 +171,8 @@ class WooCommerce_Availability_Chart {
 			return;
 		endif;
 
-		?><h3 class='avilability-chart-title'><?php _e( 'Availability', 'woocommerce-availability-chart' ); ?></h3>
+		?>
+		<h3 class='availability-chart-title'><?php _e( 'Availability', 'woocommerce-availability-chart' ); ?></h3>
 		<div class='availability-chart'><?php
 
 			if ( 'variable' == $product->product_type ) :
@@ -222,13 +223,17 @@ class WooCommerce_Availability_Chart {
 	public function get_availability_bar( $product_id, $max_stock, $variation_name ) {
 
 		$stock 		= get_post_meta( $product_id, '_stock', true );
-		$percentage = round( $stock/$max_stock*100 );
+		if ($max_stock>0) {
+			$percentage = round( $stock / $max_stock * 100 );
+		} else {
+			$percentage = 0;
+		}
 		?><div class='bar-wrap'>
 
 			<div class='variation-name'><?php echo $variation_name; ?></div>
 
 			<div class='bar'>
-				<div class='filled<?php if ( 0 == $stock ) { echo ' out-of-stock'; } ?>' style='width: <?php echo $percentage; ?>%;'><?php echo $stock; ?></div>
+				<div class='filled<?php if ( 0 == $stock ) { echo ' out-of-stock'; } ?>' style='width: <?php echo $percentage; ?>%;'><?php echo (int) $stock; ?></div>
 			</div>
 
 		</div><?php
@@ -262,7 +267,7 @@ class WooCommerce_Availability_Chart {
 
 			else :
 
-				$variation_name .= $value;
+				$variation_name .= $value . ', ';
 
 			endif;
 
