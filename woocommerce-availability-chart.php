@@ -128,7 +128,7 @@ class WooCommerce_Availability_Chart {
 			 * Bulk edit Admin panel
 			 */
 			require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-bulk-edit.php';
-			$this->bulk_edit = new WAC_Admin_Bulk_Edit();
+			$this->bulk_edit = new WAC_Bulk_Edit();
 
 			/**
 			 * Quick edit Admin panel
