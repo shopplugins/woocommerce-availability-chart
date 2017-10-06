@@ -1,5 +1,7 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  *	Class WAC_Admin_Quick_Edit.
@@ -10,8 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *	@version     1.0.0
  *	@author      Jeroen Sormani
  */
-class WAC_Admin_Quick_Edit {
-
+class WAC_Quick_Edit {
 
 	/**
 	 * Constructor.
@@ -28,7 +29,6 @@ class WAC_Admin_Quick_Edit {
 
 	}
 
-
 	/**
 	 * Quick edit.
 	 *
@@ -40,26 +40,24 @@ class WAC_Admin_Quick_Edit {
 
 		?><div class="availability-chart-field">
 			<label class="alignleft">
-			    <span class="title"><?php _e( 'Availability chart', 'woocommerce-availability-chart' ); ?></span>
-			    <span class="input-text-wrap">
-			    	<select class="availability-chart" name="_availability_chart"><?php
-
+			<span class="title"><?php esc_html_e( 'Availability chart', 'woocommerce-availability-chart' ); ?></span>
+				<span class="input-text-wrap">
+					<select class="availability-chart" name="_availability_chart">
+						<?php
 						$options = array(
 							''		=> __( '— No Change —', 'woocommerce' ),
 							'yes'	=> __( 'Display chart', 'woocommerce-availability-chart' ),
-							'no'	=> __( 'Don\'t display Chart', 'woocommerce-availability-chart' )
+							'no'	=> __( 'Don\'t display Chart', 'woocommerce-availability-chart' ),
 						);
-						foreach ( $options as $key => $value 	) {
-							echo '<option value="' . esc_attr( $key ) . '">'. $value .'</option>';
+						foreach ( $options as $key => $value ) {
+							echo '<option value="' . esc_attr( $key ) . '">' . $value . '</option>'; // WPCS: XSS ok.
 						}
-
 					?></select>
 				</span>
 			</label>
 		</div><?php
 
 	}
-
 
 	/**
 	 * Save quick edit.
@@ -72,13 +70,14 @@ class WAC_Admin_Quick_Edit {
 	 */
 	public function quick_edit_save( $product ) {
 
-		if ( $product->is_type( 'variable' ) ) :
-			if ( ! empty( $_REQUEST['_availability_chart'] ) ) :
-				update_post_meta( $product->id, '_availability_chart', wc_clean( $_REQUEST['_availability_chart'] ) );
-			endif;
-		endif;
+		if ( $product->is_type( 'variable' ) ) {
+			if ( isset( $_REQUEST['_availability_chart'] ) && 'yes' === $_REQUEST['_availability_chart'] ) { // Input var okay. CSRF ok.
+				update_post_meta( $product->id, '_availability_chart', 'yes' );
+			} else {
+				update_post_meta( $product->id, '_availability_chart', 'no' );
+			}
+		}
 
 	}
-
 
 }

@@ -134,7 +134,7 @@ class WooCommerce_Availability_Chart {
 			 * Quick edit Admin panel
 			 */
 			require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-quick-edit.php';
-			$this->quick_edit = new WAC_Admin_Quick_Edit();
+			$this->quick_edit = new WAC_Quick_Edit();
 
 		endif;
 
