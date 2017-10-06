@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /*
 Plugin Name: WooCommerce Availability Chart
 Plugin URI: https://github.com/shopplugins/woocommerce-availability-chart/
@@ -28,7 +28,9 @@ Text Domain: woocommerce-availability-chart
  *		along with WordPress. If not, see <http://www.gnu.org/licenses/>.
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Class WooCommerce_Availability_Chart.
@@ -73,16 +75,16 @@ class WooCommerce_Availability_Chart {
 	 */
 	public function __construct() {
 
-		if ( ! function_exists( 'is_plugin_active_for_network' ) ) :
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-		endif;
+		}
 
 		// Check if WooCommerce is active
-		if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) :
-			if ( ! is_plugin_active_for_network( 'woocommerce/woocommerce.php' ) ) :
+		if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+			if ( ! is_plugin_active_for_network( 'woocommerce/woocommerce.php' ) ) {
 				return;
-			endif;
-		endif;
+			}
+		}
 
 		$this->init();
 
@@ -99,9 +101,9 @@ class WooCommerce_Availability_Chart {
 	 */
 	public static function instance() {
 
-		if ( is_null( self::$instance ) ) :
+		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
-		endif;
+		}
 
 		return self::$instance;
 
@@ -116,7 +118,7 @@ class WooCommerce_Availability_Chart {
 	 */
 	public function init() {
 
-		if ( is_admin() ) :
+		if ( is_admin() ) {
 
 			/**
 			 * Admin panel
@@ -136,7 +138,7 @@ class WooCommerce_Availability_Chart {
 			require_once plugin_dir_path( __FILE__ ) . 'admin/class-wac-quick-edit.php';
 			$this->quick_edit = new WAC_Quick_Edit();
 
-		endif;
+		}
 
 		// Add the availability chart
 		add_action( 'woocommerce_single_product_summary', array( $this, 'availability_chart' ), 45 );
@@ -156,46 +158,37 @@ class WooCommerce_Availability_Chart {
 	 * @global WC_Product_Variable $product Get product object.
 	 */
 	public function availability_chart() {
-
 		global $product;
-		$display_availability_chart = get_post_meta( $product->id, '_availability_chart', true );
 
-		if ( 'no' == $display_availability_chart || empty ( $display_availability_chart ) ) :
+		$display_availability_chart = get_post_meta( $product->id, '_availability_chart', true );
+		if ( 'no' === $display_availability_chart || empty( $display_availability_chart ) ) {
 			return;
-		endif;
+		}
 
 		?>
-		<h3 class='availability-chart-title'><?php _e( 'Availability', 'woocommerce-availability-chart' ); ?></h3>
-		<div class='availability-chart'><?php
+		<h3 class='availability-chart-title'><?php esc_html_e( 'Availability', 'woocommerce-availability-chart' ); ?></h3>
+		<div class='availability-chart'>
+		<?php
+		if ( 'variable' === $product->product_type ) {
 
-			if ( 'variable' == $product->product_type ) :
+			// Loop variations
+			$available_variations = $product->get_available_variations();
+			foreach ( $available_variations as $variation ) {
+				$max_stock = $product->get_total_stock();
+				$var       = wc_get_product( $variation['variation_id'] );
 
-				// Loop variations
-				$available_variations = $product->get_available_variations();
-				foreach ( $available_variations as $variation ) :
+				if ( true === $var->variation_has_stock ) {
+					// Get variation name
+					$variation_name = $this->variation_name( $variation['attributes'] );
+					// Get an availability bar
+					$this->get_availability_bar( $variation['variation_id'], $max_stock, $variation_name );
+				}
+			}
+		}
 
-					$max_stock 	= $product->get_total_stock();
-					$var 		= wc_get_product( $variation['variation_id'] );
-
-					if ( true == $var->variation_has_stock ) :
-
-						// Get variation name
-						$variation_name = $this->variation_name( $variation['attributes'] );
-
-						// Get an availability bar
-						$this->get_availability_bar( $variation['variation_id'], $max_stock, $variation_name );
-
-					endif;
-
-				endforeach;
-
-			endif;
-
-			if ( 'simple' == $product->product_type ) :
-
-				$this->get_availability_bar( $product->id, $product->get_total_stock(), $product->get_formatted_name() );
-
-			endif;
+		if ( 'simple' === $product->product_type ) {
+			$this->get_availability_bar( $product->id, $product->get_total_stock(), $product->get_formatted_name() );
+		}
 
 		?></div><?php
 
@@ -215,17 +208,17 @@ class WooCommerce_Availability_Chart {
 	public function get_availability_bar( $product_id, $max_stock, $variation_name ) {
 
 		$stock 		= get_post_meta( $product_id, '_stock', true );
-		if ($max_stock>0) {
+		if ( $max_stock > 0 ) {
 			$percentage = round( $stock / $max_stock * 100 );
 		} else {
 			$percentage = 0;
 		}
 		?><div class='bar-wrap'>
 
-			<div class='variation-name'><?php echo $variation_name; ?></div>
+			<div class='variation-name'><?php echo $variation_name; // WPCS: XSS ok; ?></div>
 
 			<div class='bar'>
-				<div class='filled<?php if ( 0 == $stock ) { echo ' out-of-stock'; } ?>' style='width: <?php echo $percentage; ?>%;'><?php echo (int) $stock; ?></div>
+				<div class='filled<?php if ( 0 === $stock ) { echo ' out-of-stock'; } ?>' style='width: <?php echo $percentage; ?>%;'><?php echo (int) $stock; ?></div>
 			</div>
 
 		</div><?php
@@ -246,23 +239,17 @@ class WooCommerce_Availability_Chart {
 
 		$variation_name = '';
 
-		foreach ( $attributes as $attr => $value ) :
-
-			if ( term_exists( $value, str_replace( 'attribute_', '', $attr ) ) ) :
-
+		foreach ( $attributes as $attr => $value ) {
+			if ( term_exists( $value, str_replace( 'attribute_', '', $attr ) ) ) {
 				$term = get_term_by( 'slug', $value, str_replace( 'attribute_', '', $attr ) );
-				if ( isset( $term->name ) ) :
+				if ( isset( $term->name ) ) {
 					$variation_name .= $term->name . ', ';
 
-				endif;
-
-			else :
-
+				}
+			} else {
 				$variation_name .= $value . ', ';
-
-			endif;
-
-		endforeach;
+			}
+		}
 
 		return rtrim( $variation_name, ', ' );
 
@@ -282,20 +269,15 @@ class WooCommerce_Availability_Chart {
 /**
  * The main function responsible for returning the WooCommerce_Availability_Chart object.
  *
- * Use this function like you would a global variable, except without needing to declare the global.
- *
- * Example: <?php WooCommerce_Availability_Chart()->method_name(); ?>
- *
  * @since 1.0.0
- *
  * @return object WooCommerce_Availability_Chart class object.
  */
-if ( ! function_exists( 'WooCommerce_Availability_Chart' ) ) :
+if ( ! function_exists( 'WooCommerce_Availability_Chart' ) ) {
 
- 	function WooCommerce_Availability_Chart() {
+	function WooCommerce_Availability_Chart() {
 		return WooCommerce_Availability_Chart::instance();
 	}
 
-endif;
+}
 
 WooCommerce_Availability_Chart();
