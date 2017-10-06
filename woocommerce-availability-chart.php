@@ -162,8 +162,10 @@ class WooCommerce_Availability_Chart {
 
 		if ( version_compare( WC()->version, '3.0.0', '>=' ) ) {
 			$product_id = $product->get_id();
+			$product_type = $product->get_type();
 		} else {
 			$product_id = $product->id;
+			$product_type = $product->product_type;
 		}
 
 		$display_availability_chart = get_post_meta( $product_id, '_availability_chart', true );
@@ -175,7 +177,7 @@ class WooCommerce_Availability_Chart {
 		<h3 class='availability-chart-title'><?php esc_html_e( 'Availability', 'woocommerce-availability-chart' ); ?></h3>
 		<div class='availability-chart'>
 		<?php
-		if ( 'variable' === $product->product_type ) {
+		if ( 'variable' === $product_type ) {
 
 			// Loop variations
 			$available_variations = $product->get_available_variations();
