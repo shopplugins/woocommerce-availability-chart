@@ -3,9 +3,9 @@
 Plugin Name: WooCommerce Availability Chart
 Plugin URI: https://github.com/shopplugins/woocommerce-availability-chart/
 Description: WooCommerce Availability Chart displays a nice looking chart on variation product pages with the availability of products
-Version: 1.0.1
-Author: Shop Plugins, Daniel Espinoza
-Author URI: http://shopplugins.com
+Version: 1.0.2
+Author: Shop Plugins
+Author URI: http:s//shopplugins.com
 Text Domain: woocommerce-availability-chart
 
  * Copyright Shop Plugins
@@ -41,15 +41,13 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  */
 class WooCommerce_Availability_Chart {
 
-
 	/**
 	 * Plugin version.
 	 *
 	 * @since 1.0.0
 	 * @var string $version Plugin version number.
 	 */
-	public $version = '1.0.1';
-
+	public $version = '1.0.2';
 
 	/**
 	 * Plugin file.
@@ -59,7 +57,6 @@ class WooCommerce_Availability_Chart {
 	 */
 	public $file = __FILE__;
 
-
 	/**
 	 * Instance of WooCommerce_Availability_Chart.
 	 *
@@ -68,7 +65,6 @@ class WooCommerce_Availability_Chart {
 	 * @var object $instance The instance of WooCommerce_Availability_Chart.
 	 */
 	private static $instance;
-
 
 	/**
 	 * Constructor.
@@ -92,7 +88,6 @@ class WooCommerce_Availability_Chart {
 
 	}
 
-
 	/**
 	 * Instance.
 	 *
@@ -111,7 +106,6 @@ class WooCommerce_Availability_Chart {
 		return self::$instance;
 
 	}
-
 
 	/**
 	 * Init.
@@ -151,7 +145,6 @@ class WooCommerce_Availability_Chart {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_style' ) );
 
 	}
-
 
 	/**
 	 * Availability chart.
@@ -208,7 +201,6 @@ class WooCommerce_Availability_Chart {
 
 	}
 
-
 	/**
 	 * Chart bar.
 	 *
@@ -239,7 +231,6 @@ class WooCommerce_Availability_Chart {
 		</div><?php
 
 	}
-
 
 	/**
 	 * Variation name.
@@ -277,7 +268,6 @@ class WooCommerce_Availability_Chart {
 
 	}
 
-
 	/**
 	 * Enqueue style.
 	 *
@@ -288,7 +278,6 @@ class WooCommerce_Availability_Chart {
 	}
 
 }
-
 
 /**
  * The main function responsible for returning the WooCommerce_Availability_Chart object.
