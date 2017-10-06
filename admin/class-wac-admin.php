@@ -62,6 +62,7 @@ class WAC_Admin {
 	 * Save the availability chart setting.
 	 *
 	 * @since 1.0.0
+	 * @param int $post_id
 	 */
 	public function process_product_meta( $post_id ) {
 
