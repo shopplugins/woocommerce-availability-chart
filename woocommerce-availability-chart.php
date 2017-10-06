@@ -1,13 +1,13 @@
 <?php
-/*
-Plugin Name: WooCommerce Availability Chart
-Plugin URI: https://github.com/shopplugins/woocommerce-availability-chart/
-Description: WooCommerce Availability Chart displays a nice looking chart on variation product pages with the availability of products
-Version: 1.0.2
-Author: Shop Plugins
-Author URI: http:s//shopplugins.com
-Text Domain: woocommerce-availability-chart
-
+/**
+ * Plugin Name: WooCommerce Availability Chart
+ * Plugin URI: https://github.com/shopplugins/woocommerce-availability-chart/
+ * Description: WooCommerce Availability Chart displays a nice looking chart on variation product pages with the availability of products
+ * Version: 1.0.2
+ * Author: Shop Plugins
+ * Author URI: http:s//shopplugins.com
+ * Text Domain: woocommerce-availability-chart
+ *
  * Copyright Shop Plugins
  *
  *		This file is part of WooCommerce Availability Chart,
@@ -160,7 +160,13 @@ class WooCommerce_Availability_Chart {
 	public function availability_chart() {
 		global $product;
 
-		$display_availability_chart = get_post_meta( $product->id, '_availability_chart', true );
+		if ( version_compare( WC()->version, '3.0.0', '>=' ) ) {
+			$product_id = $product->get_id();
+		} else {
+			$product_id = $product->id;
+		}
+
+		$display_availability_chart = get_post_meta( $product_id, '_availability_chart', true );
 		if ( 'no' === $display_availability_chart || empty( $display_availability_chart ) ) {
 			return;
 		}
@@ -187,7 +193,7 @@ class WooCommerce_Availability_Chart {
 		}
 
 		if ( 'simple' === $product->product_type ) {
-			$this->get_availability_bar( $product->id, $product->get_total_stock(), $product->get_formatted_name() );
+			$this->get_availability_bar( $product_id, $product->get_total_stock(), $product->get_formatted_name() );
 		}
 
 		?></div><?php
