@@ -1,5 +1,10 @@
 *** WooCommerce Availability Chart ***
 
+2017-10-06
+* Updated contributors
+* Code cleanup
+* WC 3.x compatibility
+
 2015-06-08 Version 1.0.1
 * Added chart to Simple Products
 

@@ -2,8 +2,8 @@
 Contributors: shopplugins,growdev
 Tags: woocommerce, woocommerce stock, woocommerce inventory, stock, woocommerce availability, woocommerce chart, woocommerce availability chart
 Requires at least: 3.6
-Tested up to: 4.5.2
-Stable tag: 1.0.1
+Tested up to: 4.8.2
+Stable tag: 1.0.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -41,6 +41,11 @@ None.
 4. Quick edit
 
 == Changelog ==
+
+= 1.0.2 =  2017-10-06
+* Updated contributors
+* Code cleanup
+* WC 3.x compatibility
 
 = 1.0.1 =
 * Added chart to Simple Products

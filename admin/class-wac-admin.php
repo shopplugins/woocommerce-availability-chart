@@ -1,5 +1,7 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  *	Class WooCommerce_Availability_Chart
@@ -11,7 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *	@author      Jeroen Sormani
  */
 class WAC_Admin {
-
 
 	/**
 	 * Constructor.
@@ -29,7 +30,6 @@ class WAC_Admin {
 
 	}
 
-
 	/**
 	 * Add checkbox.
 	 *
@@ -46,8 +46,8 @@ class WAC_Admin {
 				woocommerce_wp_checkbox( array(
 					'id' 			=> '_availability_chart',
 					'wrapper_class' => 'show_if_simple show_if_variable',
-					'label' 		=> __('Availability chart', 'woocommerce-availability-chart' ),
-					'description' 	=> __( 'Display availability chart on product page', 'woocommerce-availability-chart' )
+					'label' 		=> __( 'Availability chart', 'woocommerce-availability-chart' ),
+					'description' 	=> __( 'Display availability chart on product page', 'woocommerce-availability-chart' ),
 				) );
 
 			?></div><?php
@@ -55,7 +55,6 @@ class WAC_Admin {
 		?></div><?php
 
 	}
-
 
 	/**
 	 * Save setting.
@@ -66,11 +65,11 @@ class WAC_Admin {
 	 */
 	public function process_product_meta( $post_id ) {
 
-		if ( ! empty( $_POST['_availability_chart'] ) ) :
+		if ( isset( $_POST['_availability_chart'] ) && 'yes' === $_POST['_availability_chart'] ) { // Input var okay. CSRF ok.
 			update_post_meta( $post_id, '_availability_chart', 'yes' );
-		else :
+		} else {
 			update_post_meta( $post_id, '_availability_chart', 'no' );
-		endif;
+		}
 
 	}
 
